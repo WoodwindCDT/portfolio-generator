@@ -1,23 +1,30 @@
 // Global Const/Var
 // Const fs required by node to enable writeFile
-const fs = require('fs');
+//const fs = require('fs');
+const inquirer = require('inquirer');
+
 // Specifies to require constant module.export to (local Path)
 // No Module.export is on this file, so create that on the new local Path file
-const generatePage = require('./src/page-template.js');
-
-// Getting data from terminal in process event
-// Slice = 2, Capturing 2 expected arguments
-const profileDataArgs = process.argv.slice(2);
+//const generatePage = require('./src/page-template.js');
 
 // Translating data from profileDataArgs 
 // into two different variables
-const [name, github] = profileDataArgs;
+//const pageHTML = generatePage(name, github);
 
 
 // Creates write file
-fs.writeFile('index.html', generatePage(name, github), err => {
-    // Error Handling
-    if (err) throw err;
-  
-    console.log('Portfolio complete! Check out index.html to see the output!');
-});
+//fs.writeFile('./index.html', pageHTML, err => {
+  //if (err) throw err;
+
+  //console.log('Portfolio complete! Check out index.html to see the output!');
+//});
+
+inquirer
+  .prompt([
+    {
+      type: 'input',
+      name: 'name',
+      message: 'What is your name?'
+    }
+  ])
+.then(answers => console.log(answers));
