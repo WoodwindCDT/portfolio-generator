@@ -2,6 +2,7 @@
 // Const fs required by node to enable writeFile
 const fs = require('fs');
 const inquirer = require('inquirer');
+const { writeFile, copyFile } = require('./utils/generate-site.js');
 
 // Specifies to require constant module.export to (local Path)
 // No Module.export is on this file, so create that on the new local Path file
@@ -144,12 +145,22 @@ const promptProject = portfolioData => {
 promptUser()
     .then(promptProject)
     .then(portfolioData => {
-    // Translating data from profileDataArgs 
-    // into two different variables
-    const pageHTML = generatePage(portfolioData);
+    return generatePage(portfolioData);
+})
 
-    fs.writeFile('./index.html', pageHTML, err => {
-    if (err) throw new Error(err);
-    console.log('Page created! Check out index.html in this directory to see it!');
-    });
+    .then(pageHTML => {
+    return writeFile(pageHTML);
+})
+    
+    .then(writeFileResponse => {
+    console.log(writeFileResponse);
+    return copyFile();
+})
+
+    .then(copyFileResponse => {
+    console.log(copyFileResponse);
+})
+
+    .catch(err => {
+    console.log(err);
 });
